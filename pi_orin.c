@@ -1,4 +1,4 @@
-static long num_rects = 1000000000000;
+static long num_rects = 10000000000;
 
 void main()
 {
