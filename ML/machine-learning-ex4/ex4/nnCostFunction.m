@@ -66,11 +66,11 @@ Theta2_grad = zeros(size(Theta2));
 %calculate the output
 mid = zeros(hidden_layer_size, m);
 X = [ones(m, 1) X];
-mid = sigmoid(Theta1_grad * X');
+mid = sigmoid(Theta1 * X');
 
 output = zeros(num_labels, m);
 mid = [ones(1, m); mid];
-output = sigmoid(Theta2_grad * mid);
+output = sigmoid(Theta2 * mid);
 
 %calculate output finished.
 %output is a [num_labels * m] matrix. 
@@ -80,28 +80,46 @@ output = sigmoid(Theta2_grad * mid);
 log_temp_result = log(output); %[num_labels * m] matrix;
 log_temp2_result = log(1 - output); %[num_labels * m] matrix;
 
-%method1
-%one_y_sample = zeros(num_labels, 1);
-%for i = 1 : m
-%    one_y_sample(y(i)) = 1;
-%    J += one_y_sample' * log_temp_result(:, i) + (1 - one_y_sample)' * log_temp2_result(:, i);
-%end
-%J /= -m;
-
-%method2
-binary_y = zeros(m,1);
-for i = 1:num_labels
-    binary_y = (y == i); %binary_y is a [m, 1] logical vector.
-    J += log_temp_result(i, :) * binary_y + log_temp2_result(i, :) * (1 - binary_y);
+%method1 part1 
+for i = 1 : m
+    one_y_sample = zeros(num_labels, 1);
+    one_y_sample(y(i)) = 1;
+    J += one_y_sample' * log_temp_result(:, i) + (1 - one_y_sample)' * log_temp2_result(:, i);
 end
 J /= -m;
 
+%method1 part2 --regularization part
+J += lambda * 0.5 * (sum(sum(Theta1.^2)) + sum(sum(Theta2.^2))) / m;
+
+%method2
+%binary_y = zeros(m,1);
+%for i = 1:num_labels
+%    binary_y = (y == i); %binary_y is a [m, 1] logical vector.
+%    J += log_temp_result(i, :) * binary_y + log_temp2_result(i, :) * (1 - binary_y);
+%end
+%J /= -m;
+
+%Part 2 Back Propagation algorithm
+
+for i = 1 : m
+    y_binary_vector = zeros(num_labels, 1);
+    y_binary_vector(y(i)) = 1;
+    delta3 = output(: , i) - y_binary_vector;
+    
+    delta2 = Theta2' * delta3 .* sigmoidGradient(mid(:, i));
+    delta2 = delta2(2 : end);
+    
+    Theta2_grad += delta3 * mid(:, i)';
+    Theta1_grad += delta2 * X(i, :);
+end
+Theta1_grad(:,2:end) += lambda * Theta1(:, 2:end);
+Theta2_grad(:,2:end) += lambda * Theta2(:, 2:end);
+Theta1_grad /= m;
+Theta2_grad /= m;
 
 
 
-
-
-
+grad = [Theta1_grad(:); Theta2_grad(:) ];
 
 
 
