@@ -89,7 +89,7 @@ end
 J /= -m;
 
 %method1 part2 --regularization part
-J += lambda * 0.5 * (sum(sum(Theta1.^2)) + sum(sum(Theta2.^2))) / m;
+J += lambda * 0.5 * (sum(sum(Theta1(:, 2:end).^2)) + sum(sum(Theta2(:, 2:end).^2))) / m;
 
 %method2
 %binary_y = zeros(m,1);
@@ -116,17 +116,6 @@ Theta1_grad(:,2:end) += lambda * Theta1(:, 2:end);
 Theta2_grad(:,2:end) += lambda * Theta2(:, 2:end);
 Theta1_grad /= m;
 Theta2_grad /= m;
-
-
-
-grad = [Theta1_grad(:); Theta2_grad(:) ];
-
-
-
-
-
-
-
 
 % -------------------------------------------------------------
 
