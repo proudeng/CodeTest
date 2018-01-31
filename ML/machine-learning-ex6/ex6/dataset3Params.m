@@ -26,9 +26,9 @@ predictions_local_optimal = 1;
 mean_error = 1;
 for C_tmp= [0.01 0.03 0.1 0.3 1 3 10 30]
     for sigma_tmp = [0.01 0.03 0.1 0.3 1 3 10 30]
-        model= svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma)); 
+        model= svmTrain(X, y, C_tmp, @(x1, x2) gaussianKernel(x1, x2, sigma_tmp)); 
         predictions = svmPredict(model, Xval);
-        mean_error = mean(double(predictions ~=yval));        
+        mean_error = mean(double(predictions ~= yval));
         if (predictions_local_optimal > mean_error)
             predictions_local_optimal = mean_error;
             C = C_tmp;
