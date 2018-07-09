@@ -5,7 +5,7 @@ import urllib2
 import mechanize
 import login
 
-COUNTRY_URL = 'http://example.webscraping.com/edit/United-Kingdom-239'
+COUNTRY_URL = 'http://example.webscraping.com/places/default/edit/United-Kingdom-239'
 
 
 

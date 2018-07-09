@@ -14,7 +14,7 @@ import lxml.html
 
 LOGIN_EMAIL = 'example@webscraping.com'
 LOGIN_PASSWORD = 'example'
-LOGIN_URL = 'http://example.webscraping.com/user/login'
+LOGIN_URL = 'http://example.webscraping.com/places/default/user/login'
 
 
 def login_basic():

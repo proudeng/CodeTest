@@ -36,16 +36,28 @@ fprintf('Loading data ...\n');
 %% Load Data
 data = load('delay_array.txt');
 m = length(data);
-train_num = m / 5 * 4;
+train_num = m / 5 * 3;
 test_num = m - train_num;
 
+for i=1:m
+	if data(i) > 20
+		data(i) = 20;
+	end
+end
+
+
 %train_data = data(1:train_num, 1);
-y = data(6:end, 1);
-x1 = data(1:end-5, 1);
-x2 = data(2:end-4, 1);
-x3 = data(3:end-3, 1);
-x4 = data(4:end-2, 1);
-x5 = data(5:end-1, 1);
+y = data(11:end, 1);
+x1 = data(1:end-10, 1);
+x2 = data(2:end-9, 1);
+x3 = data(3:end-8, 1);
+x4 = data(4:end-7, 1);
+x5 = data(5:end-6, 1);
+x6 = data(6:end-5, 1);
+x7 = data(7:end-4, 1);
+x8 = data(8:end-3, 1);
+x9 = data(9:end-2, 1);
+x10 = data(10:end-1, 1);
 X = [x1 x2 x3 x4 x5];
 
 m = length(y);
